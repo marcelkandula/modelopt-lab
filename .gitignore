@@ -1,0 +1,22 @@
+.venv/
+__pycache__/
+*.egg-info/
+
+third_party/*
+!third_party/README.md
+
+*.safetensors
+*.bin
+*.pth
+*.engine
+*.nsys-rep
+*.sqlite
+
+.env
+.env.local
+scratch/
+
+# --limit smoke runs
+results/*_limit*.jsonl
+report/*_limit*.md
+report/figures/*_limit*

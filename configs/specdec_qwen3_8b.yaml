@@ -1,0 +1,18 @@
+# Speculative decoding on real kernels, every target x draft, MT-Bench (80 questions x 2 turns) at batch 1.
+results: specdec_qwen3_8b
+tokenizer: Qwen/Qwen3-8B
+mtbench: mt_bench/question.jsonl
+
+bench: {concurrency: 1, output_length: 1024, draft_lengths: [2, 3, 4, 5], max_seq_len: 4096}
+chat_template_args: {enable_thinking: false}
+engine_args: {disable_overlap_schedule: true}
+
+targets:
+  bf16: {model: Qwen/Qwen3-8B}
+  int4_awq_lm_head: {export: qwen3-8b_int4_awq_lm_head, patch_lm_head: true}
+
+drafts:
+  none: {}
+  eagle3_tengyunw: {head: tengyunw_qwen3_8b_eagle3, label: "public head (BF16)"}
+  eagle3_tengyunw_int4: {head: tengyunw_qwen3_8b_eagle3_int4, patch_lm_head: true, label: "public head (INT4)"}
+  eagle3_own: {head: qwen3-8b_eagle3_own_10000, label: "our head (BF16)"}

@@ -1,0 +1,22 @@
+# Calibration ablation on Qwen3-8B. Each calib_grid entry overrides `calib`, runs already in results/ptq_qwen3_8b.jsonl are skipped.
+results: ptq_qwen3_8b
+model: Qwen/Qwen3-8B
+
+calib: {dataset: cnn_dailymail, num_samples: 128, seq_len: 512, batch_size: 4}
+calib_grid:
+  - {num_samples: 32}
+  - {num_samples: 128}
+  - {num_samples: 512}
+  - {dataset: nemotron-sft-instruction-following-chat-v2, apply_chat_template: true}
+  - {dataset: nemotron-math-v2, apply_chat_template: true}
+
+eval: {batch_size: 8, max_length: 4096}
+
+tasks:
+  - {task: wikitext, metric: word_ppl, max_len: 2048, stride: 1024}
+  - {task: mmlu, num_fewshot: 5, metric: acc, batch_size: 4}
+  - {task: gsm8k, num_fewshot: 5, metric: "exact_match,flexible-extract", batch_size: 32}
+
+formats:
+  int4_awq: {base: int4_awq}
+  int8_sq: {base: int8_sq}

@@ -1,0 +1,61 @@
+# EAGLE-3 training recipe for Qwen3 targets.
+# Paths (model, data, vocab cache, output) are passed by scripts/eagle3_pipeline.sh.
+metadata:
+  recipe_type: speculative_eagle
+  description: EAGLE-3 head for Qwen3, online training on self-generated conversations.
+
+model:
+  model_name_or_path:
+  trust_remote_code: false
+  use_fake_base_for_offline: false
+
+data:
+  mode:
+  data_path:
+  offline_data_path:
+  draft_vocab_cache:
+  vlm_img_dir:
+  vlm_processor:
+
+training:
+  output_dir:
+  num_train_epochs: 1
+  per_device_train_batch_size: 1
+  learning_rate: 1.0e-4
+  warmup_steps: 500
+  training_seq_len: 2048
+  logging_steps: 50
+  save_steps: 2000
+  cp_size: 1
+  disable_tqdm: false
+  estimate_ar: false
+  ar_validate_steps: -1
+  answer_only_loss: false
+  do_eval: false
+  lr_scheduler_type: linear
+  save_strategy: "no"
+  save_only_model: true
+  weight_decay: 0.0
+  dataloader_drop_last: true
+  bf16: true
+  tf32: false
+  remove_unused_columns: false
+
+eagle:
+  eagle_decoder_type: llama
+  eagle_ttt_steps: 3
+  eagle_mix_hidden_states: false
+  eagle_use_torch_compile: true
+  eagle_self_logit_distillation: true
+  eagle_freeze_base_model: true
+  eagle_loss_decay_factor: 0.9
+  eagle_hidden_state_distillation: false
+  eagle_reuse_base_decoder: false
+  eagle_report_acc: true
+  eagle_enable_nvtx: false
+  eagle_export_rope_scaling:
+    rope_type: yarn
+    factor: 32.0
+    original_max_position_embeddings: 2048
+  eagle_architecture_config:
+    draft_vocab_size: 32000

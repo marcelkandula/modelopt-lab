@@ -1,0 +1,1 @@
+{"time": "2026-10-26T12:31:08", "export": "qwen3-8b_int4_awq", "fmt": "int4_awq", "model": "Qwen/Qwen3-8B", "task": "wikitext", "limit": null, "metric": "word_ppl", "value": 15.204754260484606, "git_commit": "8294ab5", "git_dirty": true, "torch": "2.13.0+cu129", "transformers": "5.14.1", "modelopt": "0.47.0", "gpu": "NVIDIA RTX A6000"}

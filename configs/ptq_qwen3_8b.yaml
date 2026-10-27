@@ -1,0 +1,30 @@
+# Format grid on Qwen3-8B. Formats run in this order, the study is resumable.
+results: ptq_qwen3_8b
+model: Qwen/Qwen3-8B
+
+calib: {dataset: cnn_dailymail, num_samples: 128, seq_len: 512, batch_size: 4}
+
+eval: {batch_size: 8, max_length: 4096}
+
+tasks:
+  - {task: wikitext, metric: word_ppl, max_len: 2048, stride: 1024}
+  - {task: arc_challenge, num_fewshot: 0, metric: acc_norm}
+  - {task: hellaswag, num_fewshot: 0, metric: acc_norm}
+  - {task: winogrande, num_fewshot: 0, metric: acc}
+  - {task: mmlu, num_fewshot: 5, metric: acc, batch_size: 4}
+  - {task: gsm8k, num_fewshot: 5, metric: "exact_match,flexible-extract", batch_size: 32}
+
+formats:
+  bf16: {}
+  int4_awq: {base: int4_awq}
+  int8_sq: {base: int8_sq}
+  int8_wo: {base: int8_wo}
+  int4_rtn: {base: int4_rtn}
+  fp8: {base: fp8}
+  nvfp4: {base: nvfp4}
+  nvfp4_awq: {base: nvfp4_awq}
+  w4a8_awq: {base: w4a8_awq}
+  mxfp8: {base: mxfp8}
+  int4_awq_kv_fp8: {base: int4_awq, kv_cache: fp8}
+  int4_awq_kv_nvfp4: {base: int4_awq, kv_cache: nvfp4}
+  int4_awq_lm_head: {base: int4_awq, quantize_lm_head: true}

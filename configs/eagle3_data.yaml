@@ -1,0 +1,8 @@
+# EAGLE-3 training prompts
+outputs:
+  - filename: "prompts/daring_anteater.jsonl"
+    global_limit: 50000
+    sources:
+      - name: "daring-anteater"
+        splits:
+          train: 50000

@@ -1,0 +1,19 @@
+# Deployment benchmarks. Quantized checkpoints come from the accuracy study's spec + calibration.
+results: deploy_qwen3_8b
+model: Qwen/Qwen3-8B
+ptq_config: configs/ptq_qwen3_8b.yaml
+
+serve: {port: 8100, max_seq_len: 4096, max_batch_size: 64, gpu_mem_fraction: 0.80}
+
+# INT8-SmoothQuant has no Ampere path here.
+servers:
+  vllm_bf16: {engine: vllm, fmt: bf16}
+  trtllm_bf16: {engine: trtllm, fmt: bf16}
+  trtllm_int4_awq: {engine: trtllm, fmt: int4_awq}
+  trtllm_int8_wo: {engine: trtllm, fmt: int8_wo}
+  trtllm_int4_awq_lm_head: {engine: trtllm, fmt: int4_awq_lm_head, patch_lm_head: true}
+
+
+bench: {input_len: 1024, output_len: 256, concurrency: [1, 8, 32], prompts_per_concurrency: 4, min_prompts: 16}
+
+accuracy: {task: gsm8k, num_fewshot: 5, num_concurrent: 32}
