@@ -7,7 +7,7 @@ accuracy on five benchmarks, and speed on real serving kernels.
 ## Results
 
 Batch-1 decode on MT-Bench with TensorRT-LLM 1.0. Accuracy is the mean of MMLU, GSM8K, ARC-Challenge, HellaSwag and
-Winogrande. Greedy speculative decoding returns exactly the target model's output, so it doesn't change accuracy.
+Winogrande. 
 
 | Configuration | Weights | Mean accuracy | Decode speed | vs BF16 |
 |---|---|---|---|---|
@@ -59,4 +59,4 @@ make profile-specdec
 
 ## License
 
-MIT
+[MIT](LICENSE)
